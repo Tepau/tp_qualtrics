@@ -1,11 +1,10 @@
 import json
 
-from django.contrib import messages
+
 from django.shortcuts import render
 import requests
-from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, FormView
+from django.views.generic import FormView
 
 from .models import Contact
 from .form import ContactForm
@@ -18,7 +17,6 @@ class ContactList(View):
     model = Contact
 
     def get(self, request, *args, **kwargs):
-        my_list = []
         headers = {'X-API-TOKEN': settings.API_KEY}
         r = requests.get('https://fra1.qualtrics.com/API/v3/directories/' + settings.DIRECTORY_ID + '/contacts', headers=headers)
 
@@ -48,6 +46,19 @@ class SurveyView(View):
         r = requests.get('https://ca1.qualtrics.com/API/v3/survey-definitions/' + settings.SURVEY_ID, headers=headers)
         dico = {'id': r.json()['result']["SurveyID"], 'name': r.json()['result']["SurveyName"]}
         return render(request, "app/survey.html", locals())
+
+
+class DistributionView(View):
+    def get(self, request):
+        my_list = []
+        headers = {'X-API-TOKEN': settings.API_KEY}
+        payload = {'surveyId': settings.SURVEY_ID }
+        r = requests.get('https://ca1.qualtrics.com/API/v3/distributions/' + settings.DISTRIBUTION_ID + '/links', headers=headers,
+                         params=payload)
+        for user in r.json()['result']['elements']:
+            dico = {'First Name': user['firstName'], 'Last Name' : user['lastName'], 'Link' : user['link']}
+            my_list.append(dico)
+        return render(request, "app/link.html", locals())
 
 
 

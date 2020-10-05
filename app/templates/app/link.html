@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+{% for user in my_list %}
+<ul>
+{% for k, v in user.items %}
+    {% if k == 'Link' %}
+    <li>{{ k }}: <a href="{{ v }}">Lien vers l'enquête</a></li>
+    {% else %}
+    <li>{{ k }}: {{ v }}</li>
+    {% endif %}
+
+{% endfor %}
+</ul>
+{% endfor %}
+
+</body>
+</html>
