@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% for user in last_rep %}
+<ul>
+{% for k, v in user.items %}
+
+    <li>{{ k }}: {{ v }}</li>
+
+{% endfor %}
+</ul>
+{% endfor %}
+
+</body>
+</html>
