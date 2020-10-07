@@ -12,14 +12,12 @@ from .form import ContactForm
 from .tasks import create_new_contact
 from django.conf import settings
 
+
 class ContactList(View):
-    template_name = "app/contact.html"
-    model = Contact
 
     def get(self, request, *args, **kwargs):
         headers = {'X-API-TOKEN': settings.API_KEY}
         r = requests.get('https://fra1.qualtrics.com/API/v3/directories/' + settings.DIRECTORY_ID + '/contacts', headers=headers)
-
         my_rep = r.json()['result']['elements']
         last_rep = [user for user in my_rep if user['firstName'] is not None and user['lastName'] is not None and user['email'] is not None]
 

@@ -26,7 +26,7 @@ SECRET_KEY = 'ckiwixtgl46pzjyx6baifde96k6a5#!+_62@!w!_t^giery##&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -121,4 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 CELERY_BROKER_URL = 'amqp://localhost'
+
