@@ -11,18 +11,10 @@ services:
       - "8000:8000"
     depends_on:
       - rabbit
-    networks:
-      - monreseau
+
 
   rabbit:
     image: rabbitmq
-    hostname: rabbit
-    command: rabbitmq-server
-    expose:
-      - "5672"
-
-    networks:
-      - monreseau
 
 
   celery:
@@ -30,13 +22,12 @@ services:
     command: celery -A projet worker -l INFO
     volumes:
       - .:/code
-    environment:
-      - CELERY_BROKER_URL=amqp://guest:guest@rabbit:5672//
+
     depends_on:
       - rabbit
 
 
 
-networks:
-  monreseau:
+
+
 
